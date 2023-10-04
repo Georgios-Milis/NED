@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 
-import renderer.util.util as util
+import util.util as util
 
 from . import networks
 from .base_model import BaseModel

@@ -72,7 +72,6 @@ def main():
     # load test images
     images_folder = os.path.join(args.celeb, 'images')
     dataset = datasets.TestData(images_folder, iscrop=True, face_detector='fan', scale=1.25, device=device)
-    template = np.loadtxt('preprocessing/files/template.gz')
 
     if not dirs_exist(args):
 

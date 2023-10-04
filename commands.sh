@@ -1,36 +1,36 @@
 # Preprocess the video {train, test, reference}
-./preprocess.sh test_examples/Tarantino test
-./preprocess.sh reference_examples/Pacino reference
+./preprocess.sh test_examples/Pacino test
+./preprocess.sh reference_examples/DeNiro_clip reference
 
 
 # Manipulate the emotion on a test video
 # Label-driven
 python manipulator/test.py \
-    --celeb test_examples/Tarantino \
+    --celeb test_examples/Pacino \
     --checkpoints_dir ./manipulator_checkpoints \
     --trg_emotions angry \
     --exp_name manipulated_angry
 
-./postprocess.sh test_examples/Tarantino manipulated_angry renderer_checkpoints/Tarantino
+./postprocess.sh test_examples/Pacino manipulated_angry renderer_checkpoints/Pacino
 
 python postprocessing/images2video.py \
-    --imgs_path test_examples/Tarantino/manipulated_angry/full_frames \
-    --out_path test_examples/Tarantino/angry.mp4 \
-    --audio test_examples/Tarantino/videos/Tarantino_t.mp4
+    --imgs_path test_examples/Pacino/manipulated_angry/full_frames \
+    --out_path test_examples/Pacino/angry.mp4 \
+    --audio test_examples/Pacino/videos/Pacino_t.mp4
 
 # Reference-driven
 python manipulator/test.py \
-    --celeb test_examples/Tarantino \
+    --celeb test_examples/Pacino \
     --checkpoints_dir ./manipulator_checkpoints \
-    --ref_dirs reference_examples/Pacino/DECA \
-    --exp_name manipulated_Pacino
+    --ref_dirs reference_examples/DeNiro_clip/DECA \
+    --exp_name manipulated_DeNiro
 
-./postprocess.sh test_examples/Tarantino manipulated_Pacino renderer_checkpoints/Tarantino
+./postprocess.sh test_examples/Pacino manipulated_DeNiro renderer_checkpoints/Pacino
 
 python postprocessing/images2video.py \
-    --imgs_path test_examples/Tarantino/manipulated_Pacino/full_frames \
-    --out_path test_examples/Tarantino/from_Pacino.mp4 \
-    --audio test_examples/Tarantino/videos/Tarantino_t.mp4
+    --imgs_path test_examples/Pacino/manipulated_DeNiro/full_frames \
+    --out_path test_examples/Pacino/from_Pacino.mp4 \
+    --audio test_examples/Pacino/videos/Pacino_t.mp4
 
 
 # Train a neural face renderer

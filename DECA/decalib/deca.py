@@ -82,7 +82,7 @@ class DECA(nn.Module):
         self.nmfc = (self.nmfc - self.nmfc.min(dim=1, keepdim=True)[0])/(self.nmfc.max(dim=1, keepdim=True)[0] - self.nmfc.min(dim=1, keepdim=True)[0])
         if model_cfg.use_tex:
             self.flametex = FLAMETex(model_cfg).to(self.device)
-        self.D_detail = Generator(latent_dim=self.n_detail+self.n_cond, out_channels=1, out_scale=model_cfg.max_z, sample_mode = 'bilinear').to(self.device)
+        self.D_detail = Generator(latent_dim=self.n_detail+self.n_cond, out_channels=1, out_scale=model_cfg.max_z, sample_mode='bilinear').to(self.device)
         # resume model
         model_path = self.cfg.pretrained_modelpath
         if os.path.exists(model_path):

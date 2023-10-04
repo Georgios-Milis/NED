@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 
 import cv2
 import numpy as np
@@ -8,6 +9,7 @@ from skimage import img_as_float32, img_as_ubyte, io
 from skimage.measure import label
 from tqdm import tqdm
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from postprocessing.image_blending.image_blender import SoftErosion
 from preprocessing.segmentation.simple_unet import UNet
 

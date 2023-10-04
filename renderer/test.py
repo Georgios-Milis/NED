@@ -3,10 +3,10 @@ import os
 import torch
 from torch.autograd import Variable
 
-import renderer.util.util as util
-from renderer.data.custom_dataset_data_loader import CreateDataLoader
-from renderer.models.head2head_model import create_model
-from renderer.options.test_options import TestOptions
+import util.util as util
+from data.custom_dataset_data_loader import CreateDataLoader
+from models.head2head_model import create_model
+from options.test_options import TestOptions
 
 
 opt = TestOptions().parse(save=False)

@@ -10,16 +10,17 @@ username=$(urle $username)
 password=$(urle $password)
 
 echo -e "\nDownloading FLAME..."
-mkdir -p ./data
 wget --post-data "username=$username&password=$password" \
     'https://download.is.tue.mpg.de/download.php?domain=flame&sfile=FLAME2020.zip&resume=1' \
-    -O './data/FLAME2020.zip' --no-check-certificate --continue
-unzip ./data/FLAME2020.zip -d ./data/FLAME2020
-mv ./data/FLAME2020/generic_model.pkl ./data
+    -O './DECA/data/FLAME2020.zip' --no-check-certificate --continue
+unzip ./DECA/data/FLAME2020.zip -d ./DECA/data/FLAME2020
+mv ./DECA/data/FLAME2020/generic_model.pkl ./DECA/data
+rm -r ./DECA/data/FLAME2020
+rm ./DECA/data/FLAME2020.zip
 
 echo -e "\nDownloading deca_model..."
 FILEID=1rp8kdyLPvErw2dTmqtjISRVvQLj6Yzje
-FILENAME=./data/deca_model.tar
+FILENAME=./DECA/data/deca_model.tar
 wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(\
     wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate \
     'https://docs.google.com/uc?export=download&id='${FILEID} -O- | \

@@ -4,14 +4,14 @@ import numpy as np
 import torch
 from PIL import Image
 
-from renderer.data.base_dataset import (
+from data.base_dataset import (
     BaseDataset,
     get_params,
     get_transform,
     get_video_parameters
 )
-from renderer.data.image_folder import assert_valid_pairs, make_video_dataset
-from renderer.data.landmarks_to_image import create_eyes_image
+from data.image_folder import assert_valid_pairs, make_video_dataset
+from data.landmarks_to_image import create_eyes_image
 
 
 class videoDataset(BaseDataset):
