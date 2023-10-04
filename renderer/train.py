@@ -1,14 +1,17 @@
-import time
 import os
+import time
+from collections import OrderedDict
+
 import numpy as np
 import torch
 from torch.autograd import Variable
-from collections import OrderedDict
-from renderer.options.train_options import TrainOptions
+
+import renderer.util.util as util
 from renderer.data.custom_dataset_data_loader import CreateDataLoader
 from renderer.models.head2head_model import create_model
-import renderer.util.util as util
+from renderer.options.train_options import TrainOptions
 from renderer.util.visualizer import Visualizer
+
 
 opt = TrainOptions().parse()
 n_frames_G = opt.n_frames_G

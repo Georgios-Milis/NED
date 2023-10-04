@@ -1,10 +1,18 @@
 import os
-import torch
+
 import numpy as np
+import torch
 from PIL import Image
-from renderer.data.base_dataset import BaseDataset, get_params, get_transform, get_video_parameters
-from renderer.data.image_folder import make_video_dataset, assert_valid_pairs
+
+from renderer.data.base_dataset import (
+    BaseDataset,
+    get_params,
+    get_transform,
+    get_video_parameters
+)
+from renderer.data.image_folder import assert_valid_pairs, make_video_dataset
 from renderer.data.landmarks_to_image import create_eyes_image
+
 
 class videoDataset(BaseDataset):
     def initialize(self, opt):
@@ -94,9 +102,17 @@ class videoDataset(BaseDataset):
                 eyes_centers_i = self.get_eyes_center(landmark_video_path)
                 eyes_centers = eyes_centers_i if i == 0 else torch.cat([eyes_centers, eyes_centers_i], dim=0)
 
-        return_list = {'nmfc_video':nmfc_video, 'rgb_video':rgb_video, 'mask_video':mask_video, 'shape_video':shape_video,
-                       'eye_video':eye_video, 'mouth_centers':mouth_centers, 'eyes_centers':eyes_centers,
-                       'change_seq':change_seq, 'A_paths':A_paths}
+        return_list = {
+            'nmfc_video': nmfc_video,
+            'rgb_video': rgb_video,
+            'mask_video': mask_video,
+            'shape_video': shape_video,
+            'eye_video': eye_video,
+            'mouth_centers': mouth_centers,
+            'eyes_centers': eyes_centers,
+            'change_seq': change_seq,
+            'A_paths': A_paths
+        }
         return return_list
 
     def get_mouth_center(self, A_path):

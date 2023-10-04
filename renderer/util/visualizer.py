@@ -1,15 +1,14 @@
 ### Copyright (C) 2017 NVIDIA Corporation. All rights reserved.
 ### Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
-import numpy as np
 import os
 import time
-from . import util
-from . import html
+from io import BytesIO
+
+import numpy as np
 import scipy.misc
-try:
-    from StringIO import StringIO  # Python 2.7
-except ImportError:
-    from io import BytesIO         # Python 3.x
+
+from . import html, util
+
 
 class Visualizer():
     def __init__(self, opt):
@@ -39,10 +38,7 @@ class Visualizer():
             img_summaries = []
             for label, image_numpy in visuals.items():
                 # Write the image to a string
-                try:
-                    s = StringIO()
-                except:
-                    s = BytesIO()
+                s = BytesIO()
                 scipy.misc.toimage(image_numpy).save(s, format="jpeg")
                 # Create an Image object
                 img_sum = self.tf.Summary.Image(encoded_image_string=s.getvalue(), height=image_numpy.shape[0], width=image_numpy.shape[1])
