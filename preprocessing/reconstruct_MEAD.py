@@ -1,16 +1,17 @@
-import os, sys
-import numpy as np
-from time import time
 import argparse
-from tqdm import tqdm
-import torch
+import os
 import pickle
+import sys
+
+import numpy as np
+import torch
+from tqdm import tqdm
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from DECA.decalib.deca import DECA
 from DECA.decalib.datasets import datasets
-from DECA.decalib.utils import util
+from DECA.decalib.deca import DECA
 from DECA.decalib.utils.config import cfg as deca_cfg
+
 
 VID_EXTENSIONS = ['.mp4']
 

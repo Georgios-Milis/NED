@@ -11,14 +11,14 @@ Loads different resnet models
     mark:   copied from pytorch source code
 '''
 
+import math
+
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch
-from torch.nn.parameter import Parameter
-import torch.optim as optim
-import numpy as np
-import math
 import torchvision
+from torch.nn.parameter import Parameter
+
 
 class ResNet(nn.Module):
     def __init__(self, block, layers, num_classes=1000):

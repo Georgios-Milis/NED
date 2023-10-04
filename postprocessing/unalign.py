@@ -1,8 +1,10 @@
+import argparse
 import os
+
 import cv2
 import numpy as np
-import argparse
 from tqdm import tqdm
+
 
 IMAGE_EXTENSIONS = ['.png']
 

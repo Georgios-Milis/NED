@@ -1,18 +1,21 @@
-import os, sys
-import cv2
-from skimage.transform import warp
-from skimage import img_as_ubyte
-import numpy as np
 import argparse
-from tqdm import tqdm
-import torch
+import os
 import pickle
+import sys
+
+import cv2
+import numpy as np
+import torch
 import torch.nn.functional as F
+from skimage import img_as_ubyte
+from skimage.transform import warp
+from tqdm import tqdm
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from DECA.decalib.deca import DECA
 from DECA.decalib.utils import util
 from DECA.decalib.utils.config import cfg as deca_cfg
+
 
 def mkdir(path):
     if not os.path.exists(path):

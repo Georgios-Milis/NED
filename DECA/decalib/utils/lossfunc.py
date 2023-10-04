@@ -1,15 +1,11 @@
-import torch.nn as nn
+from functools import reduce
+
 import numpy as np
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
-import torch.autograd as autograd
-from functools import reduce
-import torchvision.models as models
-import cv2
 import torchfile
-from torch.autograd import Variable
-
-from . import util
+import torchvision.models as models
 
 
 def l2_distance(verts1, verts2):
@@ -636,7 +632,9 @@ class VGGLoss(nn.Module):
 
 ##############################################
 ## ref: https://github.com/cydonia999/VGGFace2-pytorch
-from ..models.frnet import resnet50, load_state_dict
+from ..models.frnet import load_state_dict, resnet50
+
+
 class VGGFace2Loss(nn.Module):
     def __init__(self, pretrained_model, pretrained_data='vggface2'):
         super(VGGFace2Loss, self).__init__()

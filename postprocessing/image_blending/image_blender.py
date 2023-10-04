@@ -2,7 +2,8 @@ import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
-from skimage import img_as_ubyte, img_as_float32
+from skimage import img_as_float32, img_as_ubyte
+
 
 class Blend():
     """

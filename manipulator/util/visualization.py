@@ -1,10 +1,10 @@
-from tqdm import tqdm
 import pickle
+
 import torch
 import torch.nn.functional as F
+from tqdm import tqdm
 
 from DECA.decalib.deca import DECA
-from DECA.decalib.utils import util
 from DECA.decalib.utils.config import cfg as deca_cfg
 
 

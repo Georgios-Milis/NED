@@ -1,6 +1,8 @@
 import os
-import torch
 import sys
+
+import torch
+
 
 class BaseModel(torch.nn.Module):
     def name(self):

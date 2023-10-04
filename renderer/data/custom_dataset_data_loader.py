@@ -1,5 +1,6 @@
 import torch
 
+
 def CreateDataset(opt):
     from data.video_dataset import videoDataset
     dataset = videoDataset()

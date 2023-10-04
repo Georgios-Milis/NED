@@ -1,13 +1,15 @@
+import argparse
 import os
+from shutil import rmtree
+
 import cv2
 import numpy as np
-from scipy import ndimage
-from PIL import Image
 import torch
-import argparse
 from facenet_pytorch import MTCNN, extract_face
+from PIL import Image
+from scipy import ndimage
 from tqdm import tqdm
-from shutil import rmtree
+
 
 VID_EXTENSIONS = ['.mp4']
 

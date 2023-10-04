@@ -1,12 +1,13 @@
-import time
 import os
-import numpy as np
+
 import torch
 from torch.autograd import Variable
-from renderer.options.test_options import TestOptions
+
+import renderer.util.util as util
 from renderer.data.custom_dataset_data_loader import CreateDataLoader
 from renderer.models.head2head_model import create_model
-import renderer.util.util as util
+from renderer.options.test_options import TestOptions
+
 
 opt = TestOptions().parse(save=False)
 opt.nThreads = 1

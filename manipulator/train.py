@@ -1,24 +1,30 @@
-import sys
 import os
+import sys
+
 sys.path.append(os.getcwd())
-from manipulator.options.train_options import TrainOptions
-from manipulator.data.train_dataset import get_train_loader, InputFetcher, get_val_loader
-from manipulator.data.test_dataset import get_test_loader
-from manipulator.models.model import create_model
-from manipulator.util import util
-from manipulator.checkpoint.checkpoint import CheckpointIO
-import torch
-import time
 import datetime
-from munch import Munch
+import time
+from test import get_style_vectors
+
 import cv2
 import numpy as np
-
+import torch
+from munch import Munch
 from torch.backends import cudnn
 
+from manipulator.checkpoint.checkpoint import CheckpointIO
+from manipulator.data.test_dataset import get_test_loader
+from manipulator.data.train_dataset import (
+    InputFetcher,
+    get_train_loader,
+    get_val_loader
+)
+from manipulator.models.model import create_model
+from manipulator.options.train_options import TrainOptions
+from manipulator.util import util
 from manipulator.util.logger import StarganV2Logger
-from test import geometric_median, get_style_vectors
 from manipulator.util.visualization import generate_mesh
+
 
 def save_checkpoint(epoch):
     for ckptio in ckptios:

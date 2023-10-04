@@ -13,13 +13,15 @@
 # For comments or questions, please email us at deca@tue.mpg.de
 # For commercial licensing contact, please contact ps-license@tuebingen.mpg.de
 
+import pickle
+
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
-import pickle
 import torch.nn.functional as F
 
-from .lbs import lbs, batch_rodrigues, vertices2landmarks, rot_mat_to_euler
+from .lbs import batch_rodrigues, lbs, rot_mat_to_euler, vertices2landmarks
+
 
 def to_tensor(array, dtype=torch.float32):
     if 'torch.tensor' not in str(type(array)):

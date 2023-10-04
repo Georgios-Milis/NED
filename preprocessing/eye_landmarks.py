@@ -1,12 +1,14 @@
-import cv2
+import argparse
 import os
+
+import cv2
+import face_alignment
+import numpy as np
 import torch
 from skimage import io
 from skimage.color import rgb2gray
-import numpy as np
-import argparse
 from tqdm import tqdm
-import face_alignment
+
 
 IMG_EXTENSIONS = ['.png']
 

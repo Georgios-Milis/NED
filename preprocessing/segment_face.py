@@ -1,13 +1,16 @@
-import os
-from skimage import io, img_as_float32, img_as_ubyte
-from skimage.measure import label
-import torch
-import numpy as np
 import argparse
-from tqdm import tqdm
+import os
+
 import cv2
-from preprocessing.segmentation.simple_unet import UNet
+import numpy as np
+import torch
+from skimage import img_as_float32, img_as_ubyte, io
+from skimage.measure import label
+from tqdm import tqdm
+
 from postprocessing.image_blending.image_blender import SoftErosion
+from preprocessing.segmentation.simple_unet import UNet
+
 
 IMG_EXTENSIONS = ['.png']
 

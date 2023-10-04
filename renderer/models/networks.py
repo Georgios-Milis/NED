@@ -1,12 +1,11 @@
+import functools
+
+import numpy as np
 import torch
 import torch.nn as nn
-from torch.nn import init
-import functools
-from torch.nn.parameter import Parameter
 from torch.autograd import Variable
-import numpy as np
-import torch.nn.functional as F
 from torchvision import models
+
 
 def get_norm_layer(norm_type='instance'):
     if norm_type == 'batch':

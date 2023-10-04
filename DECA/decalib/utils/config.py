@@ -1,10 +1,11 @@
 '''
 Default config for DECA
 '''
-from yacs.config import CfgNode as CN
 import argparse
-import yaml
 import os
+
+from yacs.config import CfgNode as CN
+
 
 cfg = CN()
 

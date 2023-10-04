@@ -1,11 +1,12 @@
 import os
-import numpy as np
-from munch import Munch
-import torch
-from torch.utils import data
+import pickle
 from itertools import groupby
 from operator import itemgetter
-import pickle
+
+import numpy as np
+import torch
+from munch import Munch
+from torch.utils import data
 
 
 class MEAD(data.Dataset):

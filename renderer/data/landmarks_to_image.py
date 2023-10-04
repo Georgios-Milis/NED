@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image
 from scipy.optimize import curve_fit
 
+
 def func(x, a, b, c):
     return a * x**2 + b * x + c
 

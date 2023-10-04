@@ -1,12 +1,13 @@
+import argparse
 import os
+
 import cv2
 import numpy as np
-from scipy import ndimage
-from PIL import Image
 import torch
-import argparse
 from facenet_pytorch import MTCNN, extract_face
+from PIL import Image
 from tqdm import tqdm
+
 
 VID_EXTENSIONS = ['.mp4', '.avi']
 

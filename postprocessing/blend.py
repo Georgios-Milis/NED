@@ -1,11 +1,14 @@
-import os
 import argparse
+import os
+
 import cv2
 import numpy as np
 import torch
 from skimage import img_as_float32, img_as_ubyte
 from tqdm import tqdm
+
 from postprocessing.image_blending.image_blender import Blend
+
 
 IMG_EXTENSIONS = ['.png']
 

@@ -17,13 +17,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from skimage.io import imread
-import imageio
-from pytorch3d.structures import Meshes
 from pytorch3d.io import load_obj
 from pytorch3d.renderer.mesh import rasterize_meshes
+from pytorch3d.structures import Meshes
+
 from . import util
-# from .rasterizer.standard_rasterize_cuda import standard_rasterize
+
 
 class Pytorch3dRasterizer(nn.Module):
     """  Borrowed from https://github.com/facebookresearch/pytorch3d

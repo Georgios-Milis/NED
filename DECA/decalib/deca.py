@@ -13,26 +13,27 @@
 # For comments or questions, please email us at deca@tue.mpg.de
 # For commercial licensing contact, please contact ps-license@tuebingen.mpg.de
 
-import os, sys
-import torch
-import torchvision
-import torch.nn.functional as F
-import torch.nn as nn
+import os
+from time import time
 
 import numpy as np
-from time import time
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision
 from skimage.io import imread
-import cv2
-import pickle
-from .utils.renderer import SRenderY
+
+from .datasets import datasets
+from .models.decoders import Generator
 from .models.encoders import ResnetEncoder
 from .models.FLAME import FLAME, FLAMETex
-from .models.decoders import Generator
 from .utils import util
-from .utils.rotation_converter import batch_euler2axis
-from .datasets import datasets
 from .utils.config import cfg
+from .utils.renderer import SRenderY
+from .utils.rotation_converter import batch_euler2axis
+
 torch.backends.cudnn.benchmark = True
+
 
 class DECA(nn.Module):
     def __init__(self, config=None, device='cuda'):

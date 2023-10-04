@@ -1,9 +1,10 @@
 import os
-import numpy as np
+import pickle
 
+import numpy as np
 import torch
 from torch.utils import data
-import pickle
+
 
 FILE_EXTENSIONS = ['.txt', '.pkl']
 

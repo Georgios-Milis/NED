@@ -1,15 +1,15 @@
-import os, sys
-import torch
-from torch.utils.data import Dataset, DataLoader, ConcatDataset
-import torchvision.transforms as transforms
-import numpy as np
-import cv2
-import scipy
-from skimage.io import imread, imsave
-from skimage.transform import estimate_transform, warp, resize, rescale
+import os
 from glob import glob
 
+import cv2
+import numpy as np
+import torch
+from skimage.io import imread
+from skimage.transform import estimate_transform, rescale, warp
+from torch.utils.data import ConcatDataset, DataLoader, Dataset
+
 from . import detectors
+
 
 def build_dataloader(config, is_train=True):
     data_list = []

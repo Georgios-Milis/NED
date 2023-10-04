@@ -1,8 +1,5 @@
-import random
-import torch
 from torch.utils.tensorboard import SummaryWriter
-import torchvision.io
-import numpy as np
+
 
 class StarganV2Logger(SummaryWriter):
     def __init__(self, logdir):

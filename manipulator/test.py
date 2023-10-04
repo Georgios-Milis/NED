@@ -1,17 +1,20 @@
-import sys
 import os
+import sys
+
 sys.path.append(os.getcwd())
-from manipulator.options.test_options import TestOptions
+import os
+import pickle
+
+import cv2
+import numpy as np
+import torch
+from scipy.spatial.distance import cdist, euclidean
+
+from manipulator.checkpoint.checkpoint import CheckpointIO
 from manipulator.data.test_dataset import get_test_loader
 from manipulator.models.model import create_model
-from manipulator.checkpoint.checkpoint import CheckpointIO
+from manipulator.options.test_options import TestOptions
 from renderer.util.util import mkdirs
-import torch
-import numpy as np
-import cv2
-import os
-from scipy.spatial.distance import cdist, euclidean
-import pickle
 
 
 # ported from "https://stackoverflow.com/questions/30299267/geometric-median-of-multidimensional-points"

@@ -13,16 +13,16 @@
 # For comments or questions, please email us at deca@tue.mpg.de
 # For commercial licensing contact, please contact ps-license@tuebingen.mpg.de
 
+import os
+from collections import OrderedDict
+
+import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
-import math
-from collections import OrderedDict
-import os
-from scipy.ndimage import morphology
-from skimage.io import imsave
-import cv2
 import torchvision
+from scipy.ndimage import morphology
+
 
 def upsample_mesh(vertices, normals, faces, displacement_map, texture_map, dense_template):
     ''' Credit to Timo

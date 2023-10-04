@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+
 
 class MappingNetwork(nn.Module):
     def __init__(self, latent_dim=4, hidden_dim = 64, style_dim=16, n_emotions = 7):

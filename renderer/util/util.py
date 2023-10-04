@@ -1,10 +1,9 @@
-import torch
-import numpy as np
-import numpy as np
 import os
-import cv2
+
+import numpy as np
+import torch
 from PIL import Image
-from scipy.spatial import distance
+
 
 def reshape(tensors):
     if isinstance(tensors, list):

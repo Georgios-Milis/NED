@@ -1,12 +1,12 @@
-import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import os
 from torch.autograd import Variable
+
 import renderer.util.util as util
-from .base_model import BaseModel
+
 from . import networks
+from .base_model import BaseModel
+
 
 ########################
 #### Discriminators ####

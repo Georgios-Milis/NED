@@ -1,5 +1,6 @@
 import os
 
+
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG', '.pgm', '.PGM',
     '.png', '.PNG', '.ppm', '.PPM', '.bmp', '.BMP', '.tiff',

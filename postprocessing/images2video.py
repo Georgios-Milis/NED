@@ -1,9 +1,10 @@
-import cv2
 import argparse
 import os
-import numpy as np
-from tqdm import tqdm
+
+import cv2
 from moviepy.editor import *
+from tqdm import tqdm
+
 
 def main():
     # Argument Parser
