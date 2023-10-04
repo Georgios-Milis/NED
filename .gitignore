@@ -1,6 +1,4 @@
 __pycache__/
 data/
-BFM_to_FLAME/
-fsgan/
 *.pth
 *examples/
