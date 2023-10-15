@@ -54,7 +54,7 @@ for i, data in enumerate(dataset):
     mask_video = mask_video[:,:,0,:,:].unsqueeze(2)
     input_A = torch.cat([input_A, mask_video], dim=2)
 
-    print('Processing NMFC image %s' % img_path[-1])
+    # print('Processing NMFC image %s' % img_path[-1])
 
     generated = modelG.inference(input_A, rgb_video)
 

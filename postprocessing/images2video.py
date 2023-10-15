@@ -13,10 +13,12 @@ def main():
                         help="path to saved images")
     parser.add_argument('--out_path', type=str, default='.',
                         help="path to save video")
-    parser.add_argument('--fps', type=float, default=30,
+    parser.add_argument('--fps', type=float, default=30000/1001,
                         help=".")
     parser.add_argument('--audio', type=str, default=None,
                         help="Path to original .mp4 file that contains audio")
+    parser.add_argument('--wav', type=str, default=None,
+                    help="Path to .wav file that contains audio")
     
     args = parser.parse_args()
 
@@ -45,6 +47,15 @@ def main():
         video = VideoFileClip(args.out_path)
         video_audio = VideoFileClip(args.audio)
         video = video.set_audio(video_audio.audio)
+        os.remove(args.out_path)
+        video.write_videofile(args.out_path)
+
+    if args.wav is not None:
+        print('Adding audio with MoviePy ...')
+        video = VideoFileClip(args.out_path)
+        video_audio = AudioFileClip(args.wav)
+        # Join video with audio and write back
+        video = video.set_audio(video_audio)
         os.remove(args.out_path)
         video.write_videofile(args.out_path)
 

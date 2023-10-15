@@ -18,17 +18,20 @@ from DECA.decalib.utils.config import cfg as deca_cfg
 
 
 def mkdir(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
+    os.makedirs(path, exist_ok=True)
 
-def read_DECA_params(path, device = 'cuda'):
+def read_DECA_params(path, device='cuda'):
+    """ 
+    Returns a list of dictionaries containing the DECA parameters:
+    ['shape', 'tex', 'exp', 'pose', 'cam', 'light', 'detail', 'tform', 'original_size']
+    """
     pkl_files = [os.path.join(path, pkl) for pkl in sorted(os.listdir(path))]
     params = []
     for p in pkl_files:
         with open(p, 'rb') as f:
             param = pickle.load(f)
         for key in param.keys():
-            if key!='tform' and key!='original_size':
+            if key not in ['tform', 'original_size']:
                 param[key] = torch.from_numpy(param[key]).to(device)
         params.append(param)
 
@@ -42,8 +45,8 @@ def read_eye_landmarks(path):
         if os.path.exists(f):
             left = np.concatenate([np.loadtxt(f)[0:6], np.loadtxt(f)[12:13]], axis=0)
             right = np.concatenate([np.loadtxt(f)[6:12], np.loadtxt(f)[13:14]], axis=0)
-            eye_landmarks_left.append(left)  # Left eye
-            eye_landmarks_right.append(right) # Right eye
+            eye_landmarks_left.append(left)
+            eye_landmarks_right.append(right)
     return [eye_landmarks_left, eye_landmarks_right]
 
 def transform_points(points, mat):

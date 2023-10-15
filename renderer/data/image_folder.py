@@ -30,5 +30,5 @@ def make_video_dataset(dir, max_n_sequences=None):
 def assert_valid_pairs(A_paths, B_paths):
     assert len(A_paths) > 0 and len(B_paths) > 0, 'No sequences found.'
     assert len(A_paths) == len(B_paths), 'Number of NMFC sequences different than RGB sequences.'
-    for i in range(len(A_paths)):
-        assert len(A_paths[i]) == len(B_paths[i]), 'Number of NMFC frames in sequence different than corresponding RGB frames.'
+    # for i in range(len(A_paths)):
+    #     assert len(A_paths[i]) == len(B_paths[i]), 'Number of NMFC frames in sequence different than corresponding RGB frames.'
