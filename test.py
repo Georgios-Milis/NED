@@ -16,11 +16,6 @@ import torch
 # Required:
 #    ['shape', 'tex', 'exp', 'pose', 'cam', 'light', 'detail', 'tform', 'original_size']
 
-def check_decas():
-    deca_path = "test_examples/Obama/manipulated_happy/DECA/001131.pkl"
-    data = np.load(deca_path, allow_pickle=True)
-    print(data['exp'].shape, data['pose'].shape)
-
 
 def reprocess_blendshapes(blendshape_path):
     blendshapes = torch.load(blendshape_path)
@@ -31,7 +26,8 @@ def reprocess_blendshapes(blendshape_path):
     ).squeeze().transpose(-1, -2).cpu().numpy()
 
     for i in range(blendshapes.shape[0]):
-        path = os.path.join(f"test_examples/Obama/IMPORTED/DECA/{i:06d}.pkl")
+        os.makedirs("test_examples/Subject1/test2/DECA", exist_ok=True)
+        path = os.path.join(f"test_examples/Subject1/test2/DECA/{i:06d}.pkl")
         codedict = {}
         exp = blendshapes[i][6:].reshape((1, -1))
         codedict['exp'] = exp
@@ -45,4 +41,4 @@ def reprocess_blendshapes(blendshape_path):
 
 
 if __name__ == '__main__':
-    reprocess_blendshapes('ref.pth')
+    reprocess_blendshapes('../FastSpeech2/test/test2.pth')

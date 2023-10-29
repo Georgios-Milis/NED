@@ -123,12 +123,12 @@ def main():
 
     face_paths = get_image_paths(faces_path)
 
-    if not os.path.exists(faces_path.replace('/faces', '/full_frames')):
-        blender = Blend(method=args.method, n_levels=args.n_levels, n_levels_copy=args.n_levels_copy, device = device)
-        blend_and_save_images(face_paths, blender, args)
-        print('DONE!')
-    else:
-        print('Image blending already done!')
+    # if not os.path.exists(faces_path.replace('/faces', '/full_frames')):
+    blender = Blend(method=args.method, n_levels=args.n_levels, n_levels_copy=args.n_levels_copy, device = device)
+    blend_and_save_images(face_paths, blender, args)
+    print('DONE!')
+    # else:
+    #     print('Image blending already done!')
 
 if __name__=='__main__':
     main()

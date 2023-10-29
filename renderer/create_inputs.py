@@ -37,6 +37,22 @@ def read_DECA_params(path, device='cuda'):
 
     return params, pkl_files
 
+
+def read_DECAs_from_pth(path):
+    """ 
+    Returns a list of dictionaries containing the DECA parameters:
+    ['shape', 'tex', 'exp', 'pose', 'cam', 'light', 'detail', 'tform', 'original_size']
+    """
+    blendshapes = torch.load(path)
+    params = []
+    for blendshape in blendshapes[0]:
+        params.append({
+            "pose": blendshape[:6].unsqueeze(0),
+            "exp": blendshape[6:].unsqueeze(0)
+        })
+    return params
+
+
 def read_eye_landmarks(path):
     txt_files = [os.path.join(path, txt) for txt in sorted(os.listdir(path))]
     eye_landmarks_left = []
@@ -77,6 +93,9 @@ def main():
     parser.add_argument('--no_align', action='store_true', help='If specfied, no alignment is performed')
     parser.add_argument('--save_renderings', action='store_true', help='Whether to save renderings')
     parser.add_argument('--save_shapes', action='store_true', help='Whether to save shapes')
+    
+    parser.add_argument('--input', type=str, help='Input blendshapes file in pth format')
+
     args = parser.parse_args()
 
     # Figure out the device
@@ -97,13 +116,18 @@ def main():
 
     # Check if conditional input files already exist.
     save_nmfcs_dir = os.path.join(args.celeb, args.exp_name, 'nmfcs')
-    if os.path.isdir(save_nmfcs_dir):
-        print('Conditional input files already exist!')
-        exit(0)
+    # if os.path.isdir(save_nmfcs_dir):
+    #     print('Conditional input files already exist!')
+    #     exit(0)
 
     # Read parameters from the DECA sub-folders.
-    src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
+    # src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
+    # trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+
+    # =========================================================================
+    src_codedicts = read_DECAs_from_pth(args.input)
     trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+    # =========================================================================
 
     # Read src eye landmarks.
     if not args.no_eye_gaze:
@@ -131,8 +155,22 @@ def main():
     deca = DECA(config = deca_cfg, device=device)
 
     for i, (src_codedict, trg_codedict, pth) in tqdm(enumerate(zip(src_codedicts, trg_codedicts, paths)), total=len(src_codedicts)):
+        
+        # print(src_codedict["exp"].shape, src_codedict["pose"].shape)
+        # print(trg_codedict["exp"].shape, trg_codedict["pose"].shape)
+        
         src_codedict['exp'] = trg_codedict['exp']
         src_codedict['pose'][0,3] = trg_codedict['pose'][0,3]
+
+        # print(src_codedict["exp"].shape, src_codedict["pose"].shape)
+        # print(trg_codedict["exp"].shape, trg_codedict["pose"].shape)
+
+        # =====================================================================
+        print(src_codedict.keys(), trg_codedict.keys())
+        # for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
+        #     src_codedict[key] = trg_codedict[key]
+        # src_codedict['shape'] = trg_codedict['shape']
+        # =====================================================================
 
         opdict, visdict = deca.decode(src_codedict)
 

@@ -211,47 +211,47 @@ def main():
 
     # check if face detection has already been done
     images_dir = os.path.join(args.celeb, 'images')
-    if os.path.isdir(images_dir):
-        print('Face detection already done!')
+    # if os.path.isdir(images_dir):
+    #     print('Face detection already done!')
 
-    else:
-        # Figure out the device
-        gpu_id = int(args.gpu_id)
-        if gpu_id < 0:
-            device = 'cpu'
-        elif torch.cuda.is_available():
-            if gpu_id >= torch.cuda.device_count():
-                device = 'cuda:0'
-            else:
-                device = 'cuda:' + str(gpu_id)
+    # else:
+    # Figure out the device
+    gpu_id = int(args.gpu_id)
+    if gpu_id < 0:
+        device = 'cpu'
+    elif torch.cuda.is_available():
+        if gpu_id >= torch.cuda.device_count():
+            device = 'cuda:0'
         else:
-            print('GPU device not available. Exit')
-            exit(0)
+            device = 'cuda:' + str(gpu_id)
+    else:
+        print('GPU device not available. Exit')
+        exit(0)
 
-        # subfolder containing videos
-        videos_path = os.path.join(args.celeb, 'videos')
+    # subfolder containing videos
+    videos_path = os.path.join(args.celeb, 'videos')
 
-        # Store video paths in list.
-        mp4_paths = get_video_paths(videos_path)
-        n_mp4s = len(mp4_paths)
-        print('Number of videos to process: %d \n' % n_mp4s)
+    # Store video paths in list.
+    mp4_paths = get_video_paths(videos_path)
+    n_mp4s = len(mp4_paths)
+    print('Number of videos to process: %d \n' % n_mp4s)
 
-        # Initialize the MTCNN face  detector.
-        detector = MTCNN(image_size=args.cropped_image_size, select_largest = args.select_largest, margin=args.margin, post_process=False, device=device)
+    # Initialize the MTCNN face  detector.
+    detector = MTCNN(image_size=args.cropped_image_size, select_largest = args.select_largest, margin=args.margin, post_process=False, device=device)
 
-        # Run detection
-        n_completed = 0
-        start_i = 0
-        for path in mp4_paths:
-            n_completed += 1
-            start_i = detect_and_save_faces(detector, path, args.split, start_i, args)
-            print('(%d/%d) %s [SUCCESS]' % (n_completed, n_mp4s, path))
-        if args.split:
-            # delete last sub-sequence if has less than "seq_length" frames
-            last_folder = os.path.join(images_dir, sorted(os.listdir(images_dir))[-1])
-            if len(os.listdir(last_folder))!=args.seq_length:
-                rmtree(last_folder)
-        print('DONE!')
+    # Run detection
+    n_completed = 0
+    start_i = 0
+    for path in mp4_paths:
+        n_completed += 1
+        start_i = detect_and_save_faces(detector, path, args.split, start_i, args)
+        print('(%d/%d) %s [SUCCESS]' % (n_completed, n_mp4s, path))
+    if args.split:
+        # delete last sub-sequence if has less than "seq_length" frames
+        last_folder = os.path.join(images_dir, sorted(os.listdir(images_dir))[-1])
+        if len(os.listdir(last_folder))!=args.seq_length:
+            rmtree(last_folder)
+    print('DONE!')
 
 if __name__ == "__main__":
     main()
