@@ -1,6 +1,7 @@
 import argparse
 import os
 import pickle
+import re
 import sys
 
 import cv2
@@ -71,9 +72,10 @@ def main():
 
     # load test images
     images_folder = os.path.join(args.celeb, 'images')
+    # TODO: use resolution here
     dataset = datasets.TestData(images_folder, iscrop=True, face_detector='fan', scale=1.25, device=device)
 
-    if not dirs_exist(args):
+    if True: #not dirs_exist(args):
 
         # run DECA
         deca_cfg.model.use_tex = True
@@ -96,15 +98,26 @@ def main():
                 with open(codedict_pth, "wb") as f:
                     pickle.dump(new_codedict, f)
 
+
+                # TODO: insert SPECTRE here
+                spectre_fit = img_pth.replace('/images', '/SPECTRE')
+                spectre_fit = re.sub("/\d{6}.png", ".pkl", spectre_fit)
+                spectre_dict = np.load(spectre_fit, allow_pickle=True)
+                frame_id = os.path.split(img_pth)[-1].replace('.png', '')
+                idx = int(frame_id) % 50
+                new_codedict["pose"] = spectre_dict["pose"][idx].numpy()
+                new_codedict["exp"] = spectre_dict["exp"][idx].numpy()
+
+
                 if args.save_renderings or args.save_shapes or args.save_nmfcs:
                     opdict, visdict = deca.decode(codedict)
 
-            if args.save_renderings :
-                mkdir(os.path.dirname(img_pth.replace('/images', '/renderings')))
-                rendering_pth = img_pth.replace('/images', '/renderings')
-                detail_image = F.grid_sample(opdict['uv_texture'], opdict['grid'].detach(), align_corners=False)
-                detail_image = warp(util.tensor2image(detail_image[0])/255, dataset[i]['tform'], output_shape=(dataset[i]['original_size'][1], dataset[i]['original_size'][0]))
-                cv2.imwrite(rendering_pth, (detail_image*255).astype(int))
+            # if args.save_renderings :
+            #     mkdir(os.path.dirname(img_pth.replace('/images', '/renderings')))
+            #     rendering_pth = img_pth.replace('/images', '/renderings')
+            #     detail_image = F.grid_sample(opdict['uv_texture'], opdict['grid'].detach(), align_corners=False)
+            #     detail_image = warp(util.tensor2image(detail_image[0])/255, dataset[i]['tform'], output_shape=(dataset[i]['original_size'][1], dataset[i]['original_size'][0]))
+            #     cv2.imwrite(rendering_pth, (detail_image*255).astype(int))
 
             if args.save_shapes:
                 mkdir(os.path.dirname(img_pth.replace('/images', '/shapes')))

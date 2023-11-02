@@ -121,8 +121,8 @@ def main():
     #     exit(0)
 
     # Read parameters from the DECA sub-folders.
-    # src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
-    # trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+    src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
+    trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
 
     # =========================================================================
     src_codedicts = read_DECAs_from_pth(args.input)
@@ -166,9 +166,9 @@ def main():
         # print(trg_codedict["exp"].shape, trg_codedict["pose"].shape)
 
         # =====================================================================
-        print(src_codedict.keys(), trg_codedict.keys())
-        # for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
-        #     src_codedict[key] = trg_codedict[key]
+       # print(src_codedict.keys(), trg_codedict.keys())
+        for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
+            src_codedict[key] = trg_codedict[key]
         # src_codedict['shape'] = trg_codedict['shape']
         # =====================================================================
 
