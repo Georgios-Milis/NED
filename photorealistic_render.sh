@@ -6,14 +6,18 @@ set -e
 # audio=$2
 # outfile=$3
 
-exp_name="1_10_pred"
+exp_name="1_9_pred"
 
 celeb=test_examples/55F
-# 55F_2 is trained with SPECTRE
-checkpoints_dir=renderer_checkpoints/55F_2
+# 55F_3 is trained with SPECTRE
+checkpoints_dir=renderer_checkpoints/55F_3
 
-mkdir -p $celeb/$exp_name/DECA
-cp $celeb/DECA/* $celeb/$exp_name/DECA
+if [ -d $celeb/$exp_name/DECA ]; then 
+    echo
+else
+    mkdir -p $celeb/$exp_name/DECA
+    cp $celeb/DECA/* $celeb/$exp_name/DECA
+fi
 
 # postprocess.sh
 # Shapes, nmfcs...
@@ -34,4 +38,10 @@ python postprocessing/blend.py --celeb $celeb --exp_name $exp_name --save_images
 python postprocessing/images2video.py \
     --imgs_path $celeb/$exp_name/full_frames \
     --out_path $celeb/videos/$exp_name.mp4 \
+    --wav /home/gmil/FastSpeech2/results_new/55F/from_nlipexp3_exp4_03e6/$exp_name.mp4.wav
+
+
+python postprocessing/images2video.py \
+    --imgs_path test_examples/55F/$exp_name/shapes \
+    --out_path test_examples/55F/videos/$exp_name-shape.mp4 \
     --wav /home/gmil/FastSpeech2/results_new/55F/from_nlipexp3_exp4_03e6/$exp_name.mp4.wav

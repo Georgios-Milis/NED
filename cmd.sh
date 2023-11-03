@@ -14,7 +14,7 @@ set -e
 
 # TEST with emotion
 # Preprocess for testing mode
-# ./preprocess.sh test_examples/14M test
+# ./preprocess.sh test_examples/55F test
 
 # Manipulate emotion
 python manipulator/test.py \

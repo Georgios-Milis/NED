@@ -119,14 +119,16 @@ def main():
     #     print('Conditional input files already exist!')
     #     exit(0)
 
-    # Read parameters from the DECA sub-folders.
-    src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
-    trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+    
+    if not args.input:
+        # Read parameters from the DECA sub-folders.
+        src_codedicts, _ = read_DECA_params(os.path.join(args.celeb, 'DECA'), device=device)
+        trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+    else:
+        # Use input to drive generation
+        src_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+        trg_codedicts = read_DECAs_from_pth(args.input)
 
-    # =========================================================================
-    # src_codedicts = read_DECAs_from_pth(args.input)
-    # trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
-    # =========================================================================
 
     # Read src eye landmarks.
     if not args.no_eye_gaze:
@@ -155,12 +157,7 @@ def main():
 
     for i, (src_codedict, trg_codedict, pth) in tqdm(enumerate(zip(src_codedicts, trg_codedicts, paths)), total=len(src_codedicts)):  
         src_codedict['exp'] = trg_codedict['exp']
-        src_codedict['pose'][0,3] = trg_codedict['pose'][0,3]
-
-        # =====================================================================
-        # for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
-        #     src_codedict[key] = trg_codedict[key]
-        # =====================================================================
+        src_codedict['pose'] = trg_codedict['pose']
 
         opdict, visdict = deca.decode(src_codedict)
 
