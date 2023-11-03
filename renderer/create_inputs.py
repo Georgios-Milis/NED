@@ -40,8 +40,7 @@ def read_DECA_params(path, device='cuda'):
 
 def read_DECAs_from_pth(path):
     """ 
-    Returns a list of dictionaries containing the DECA parameters:
-    ['shape', 'tex', 'exp', 'pose', 'cam', 'light', 'detail', 'tform', 'original_size']
+    Returns a list of dictionaries containing the DECA parameters: ['exp', 'pose']
     """
     blendshapes = torch.load(path)
     params = []
@@ -125,8 +124,8 @@ def main():
     trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
 
     # =========================================================================
-    src_codedicts = read_DECAs_from_pth(args.input)
-    trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
+    # src_codedicts = read_DECAs_from_pth(args.input)
+    # trg_codedicts, paths = read_DECA_params(os.path.join(args.celeb, args.exp_name, 'DECA'), device=device)
     # =========================================================================
 
     # Read src eye landmarks.
@@ -154,22 +153,13 @@ def main():
     deca_cfg.model.use_tex = True
     deca = DECA(config = deca_cfg, device=device)
 
-    for i, (src_codedict, trg_codedict, pth) in tqdm(enumerate(zip(src_codedicts, trg_codedicts, paths)), total=len(src_codedicts)):
-        
-        # print(src_codedict["exp"].shape, src_codedict["pose"].shape)
-        # print(trg_codedict["exp"].shape, trg_codedict["pose"].shape)
-        
+    for i, (src_codedict, trg_codedict, pth) in tqdm(enumerate(zip(src_codedicts, trg_codedicts, paths)), total=len(src_codedicts)):  
         src_codedict['exp'] = trg_codedict['exp']
         src_codedict['pose'][0,3] = trg_codedict['pose'][0,3]
 
-        # print(src_codedict["exp"].shape, src_codedict["pose"].shape)
-        # print(trg_codedict["exp"].shape, trg_codedict["pose"].shape)
-
         # =====================================================================
-       # print(src_codedict.keys(), trg_codedict.keys())
-        for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
-            src_codedict[key] = trg_codedict[key]
-        # src_codedict['shape'] = trg_codedict['shape']
+        # for key in ['shape', 'tex', 'cam', 'light', 'detail', 'tform', 'original_size']:
+        #     src_codedict[key] = trg_codedict[key]
         # =====================================================================
 
         opdict, visdict = deca.decode(src_codedict)

@@ -18,17 +18,17 @@ set -e
 
 # Manipulate emotion
 python manipulator/test.py \
-    --celeb test_examples/55F \
+    --celeb test_examples/14M \
     --checkpoints_dir ./manipulator_checkpoints \
     --trg_emotions neutral \
     --exp_name manipulated_neutral
 
-./postprocess.sh test_examples/55F manipulated_neutral renderer_checkpoints/55F_2
+./postprocess.sh test_examples/14M manipulated_neutral renderer_checkpoints/14M_2
 
 python postprocessing/images2video.py \
-    --imgs_path test_examples/55F/manipulated_neutral/full_frames \
-    --out_path test_examples/55F/videos/neutral.mp4 \
-    --audio test_examples/55F/videos/55F_t.mp4
+    --imgs_path test_examples/14M/manipulated_neutral/full_frames \
+    --out_path test_examples/14M/videos/neutral.mp4 \
+    --audio test_examples/14M/videos/14M_t.mp4
 
 
 # TEST with reference

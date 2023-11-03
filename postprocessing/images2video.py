@@ -13,7 +13,7 @@ def main():
                         help="path to saved images")
     parser.add_argument('--out_path', type=str, default='.',
                         help="path to save video")
-    parser.add_argument('--fps', type=float, default=30000/1001,
+    parser.add_argument('--fps', type=float, default=25,
                         help=".")
     parser.add_argument('--audio', type=str, default=None,
                         help="Path to original .mp4 file that contains audio")

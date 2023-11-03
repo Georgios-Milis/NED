@@ -166,7 +166,7 @@ def main():
     mats_dir = os.path.join(args.celeb, 'align_transforms')
     mat_paths = get_mats_paths(mats_dir)
 
-    if not dirs_exist(mat_paths, args):
+    if True: #not dirs_exist(mat_paths, args):
         aligned = align(mat_paths, args)
         save_aligned(mat_paths, aligned, args)
         print('DONE!')

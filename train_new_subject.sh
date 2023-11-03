@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-video="14M_t.mp4"
+# video="55F_t.mp4"
 
-subject="14M_2"
+subject="55F_3"
 dataset_path=train_examples
 celeb=$dataset_path/$subject
 spectre_path=$celeb/SPECTRE
@@ -22,10 +22,10 @@ spectre_path=$celeb/SPECTRE
 # I should interfere here! ====================================================
 
 # Writes DECA, shapes, nmfcs
-python preprocessing/reconstruct.py \
-    --celeb $celeb \
-    --save_shapes \
-    --save_nmfcs
+# python preprocessing/reconstruct.py \
+#     --celeb $celeb \
+#     --save_shapes \
+#     --save_nmfcs
 
 # =============================================================================
 
