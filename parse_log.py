@@ -20,7 +20,7 @@ loss_patterns = {
 loss_data = {loss: [] for loss in loss_patterns}
 
 # Open and read the log file
-with open('/home/gmil/NED/renderer_checkpoints/Ricky_SPECTRE/loss_log.txt', 'r') as file:
+with open('/home/gmil/NED/renderer_checkpoints/55F_3/loss_log.txt', 'r') as file:
     lines = file.readlines()
 
 # Parse the log file
@@ -56,4 +56,4 @@ for i, category in enumerate(loss_categories):
 
 plt.tight_layout()
 plt.subplots_adjust(top=0.9)
-plt.savefig("losses_ricky.png", bbox_inches="tight")
+plt.savefig("losses_55F.png", bbox_inches="tight")

@@ -73,7 +73,7 @@ def main():
     faces_a_dir = os.path.join(args.celeb, args.exp_name, 'faces_aligned')
     face_a_paths = get_faces_a_paths(faces_a_dir)
 
-    if not os.path.exists(faces_a_dir.replace('/faces_aligned', '/faces')):
+    if True: #not os.path.exists(faces_a_dir.replace('/faces_aligned', '/faces')):
         faces = unalign(face_a_paths, args)
         save_faces(face_a_paths, faces, args)
         print('DONE!')

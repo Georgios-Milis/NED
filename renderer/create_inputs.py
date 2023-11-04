@@ -157,7 +157,7 @@ def main():
 
     for i, (src_codedict, trg_codedict, pth) in tqdm(enumerate(zip(src_codedicts, trg_codedicts, paths)), total=len(src_codedicts)):  
         src_codedict['exp'] = trg_codedict['exp']
-        src_codedict['pose'] = trg_codedict['pose']
+        src_codedict['pose'][:, 3:6] = trg_codedict['pose'][:, 3:6]
 
         opdict, visdict = deca.decode(src_codedict)
 
@@ -184,7 +184,8 @@ def main():
 
         if args.save_shapes:
             shape_pth = os.path.splitext(pth.replace('/DECA', '/shapes'))[0] + '.png'
-            shape_image = warp(util.tensor2image(visdict['shape_detail_images'][0])/255, src_codedict['tform'], output_shape=(src_codedict['original_size'][1], src_codedict['original_size'][0]))
+            # shape_image = warp(util.tensor2image(visdict['shape_detail_images'][0])/255, src_codedict['tform'], output_shape=(src_codedict['original_size'][1], src_codedict['original_size'][0]))
+            shape_image = warp(util.tensor2image(visdict['shape_images'][0])/255, src_codedict['tform'], output_shape=(src_codedict['original_size'][1], src_codedict['original_size'][0]))
             shape_image = img_as_ubyte(shape_image)
             cv2.imwrite(shape_pth, shape_image)
             if not args.no_align:

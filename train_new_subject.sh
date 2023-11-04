@@ -30,15 +30,18 @@ spectre_path=$celeb/SPECTRE
 # =============================================================================
 
 # All aligned
-python preprocessing/align.py \
-    --celeb $celeb \
-    --faces_and_masks \
-    --shapes \
-    --nmfcs \
+# python preprocessing/align.py \
+#     --celeb $celeb \
+#     --faces_and_masks \
+#     --shapes \
+#     --nmfcs \
 
 # Train renderer
 python renderer/train.py \
     --celeb $celeb \
     --checkpoints_dir renderer_checkpoints/$subject/ \
-    --load_pretrain checkpoints_meta-renderer/ \
-    --which_epoch 15
+    --continue_train \
+    --niter 40 \
+    --lr 0.00005
+    # --load_pretrain checkpoints_meta-renderer/ \
+    # --which_epoch 15
