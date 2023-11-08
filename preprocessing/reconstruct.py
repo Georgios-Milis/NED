@@ -90,7 +90,7 @@ def main():
                 
                 # Insert SPECTRE here
                 spectre_fit = img_pth.replace('/images', '/SPECTRE')
-                spectre_fit = re.sub("/\d{6}.png", "images.pkl", spectre_fit)
+                spectre_fit = re.sub("/\d{6}.png", ".pkl", spectre_fit)
                 spectre_dict = np.load(spectre_fit, allow_pickle=True)
                 frame_id = os.path.split(img_pth)[-1].replace('.png', '')
                 idx = int(frame_id) % 50

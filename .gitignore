@@ -5,3 +5,5 @@ data/
 renderer_checkpoints/
 *.png
 *.npz
+*.txt
+results/

@@ -1,15 +1,13 @@
 #!/bin/bash
 set -e
 
-# video="55F_t.mp4"
 
-subject="55F_3"
-dataset_path=train_examples
-celeb=$dataset_path/$subject
-spectre_path=$celeb/SPECTRE
+subject="21M"
+celeb=train_examples/$subject
 
-# mkdir -p $celeb/videos
-# mv $video $celeb/videos/($subject)_t.mp4
+# # video="55F_t.mp4"
+# # mkdir -p $celeb/videos
+# # mv $video $celeb/videos/($subject)_t.mp4
 
 # # preprocess.sh in train mode
 # # Face detection (writes images)
@@ -19,29 +17,35 @@ spectre_path=$celeb/SPECTRE
 # # Writes masks, faces
 # python preprocessing/segment_face.py --celeb $celeb
 
-# I should interfere here! ====================================================
+# exit
 
+# Go to reconstruct and insert SPECTRE!
 # Writes DECA, shapes, nmfcs
 # python preprocessing/reconstruct.py \
 #     --celeb $celeb \
 #     --save_shapes \
 #     --save_nmfcs
 
-# =============================================================================
-
 # All aligned
-# python preprocessing/align.py \
-#     --celeb $celeb \
-#     --faces_and_masks \
-#     --shapes \
-#     --nmfcs \
+python preprocessing/align.py \
+    --celeb $celeb \
+    --faces_and_masks \
+    --shapes \
+    --nmfcs \
+    --landmarks
+
 
 # Train renderer
 python renderer/train.py \
     --celeb $celeb \
     --checkpoints_dir renderer_checkpoints/$subject/ \
+    --niter 20 \
+    --load_pretrain checkpoints_meta-renderer/ \
+    --which_epoch 15
+
+python renderer/train.py \
+    --celeb $celeb \
+    --checkpoints_dir renderer_checkpoints/$subject/ \
     --continue_train \
-    --niter 40 \
+    --niter 30 \
     --lr 0.00005
-    # --load_pretrain checkpoints_meta-renderer/ \
-    # --which_epoch 15

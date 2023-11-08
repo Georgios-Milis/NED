@@ -116,7 +116,7 @@ def get_faces(detector, images, previous_box, args):
 
     return ret_faces, ret_boxes, boxes[-1]
 
-def detect_and_save_faces(detector, mp4_path, split, start_i, args):
+def detect_and_save_faces(detector, mp4_path, split, start_i, args, test_name='images'):
 
     reader = cv2.VideoCapture(mp4_path)
     fps = reader.get(cv2.CAP_PROP_FPS)
@@ -134,7 +134,7 @@ def detect_and_save_faces(detector, mp4_path, split, start_i, args):
         # else, detect faces in sequence and create new list
         else:
             face_images, boxes, previous_box = get_faces(detector, images, previous_box, args)
-            save_images(tensor2npimage(face_images), 'images', split, start_i, args)
+            save_images(tensor2npimage(face_images), test_name, split, start_i, args)
 
             if args.save_full_frames:
                 save_images(images, 'full_frames', split, start_i, args)
@@ -154,7 +154,7 @@ def detect_and_save_faces(detector, mp4_path, split, start_i, args):
             images = [image]
     # last sequence
     face_images, boxes, _ = get_faces(detector, images, previous_box, args)
-    save_images(tensor2npimage(face_images), 'images', split, start_i, args)
+    save_images(tensor2npimage(face_images), test_name, split, start_i, args)
 
     if args.save_full_frames:
         save_images(images, 'full_frames', split, start_i, args)
@@ -230,6 +230,8 @@ def main():
 
     # subfolder containing videos
     videos_path = os.path.join(args.celeb, 'videos')
+
+    # videos_path = "/home/gmil/SadTalker/results"
 
     # Store video paths in list.
     mp4_paths = get_video_paths(videos_path)
