@@ -7,3 +7,4 @@ renderer_checkpoints/
 *.npz
 *.txt
 results/
+tmp
