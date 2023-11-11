@@ -2,7 +2,7 @@
 set -e
 
 
-subject="21M"
+subject="55F"
 celeb=train_examples/$subject
 
 # # video="55F_t.mp4"
@@ -21,10 +21,10 @@ celeb=train_examples/$subject
 
 # Go to reconstruct and insert SPECTRE!
 # Writes DECA, shapes, nmfcs
-# python preprocessing/reconstruct.py \
-#     --celeb $celeb \
-#     --save_shapes \
-#     --save_nmfcs
+python preprocessing/reconstruct.py \
+    --celeb $celeb \
+    --save_shapes \
+    --save_nmfcs
 
 # All aligned
 python preprocessing/align.py \

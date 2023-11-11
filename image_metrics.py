@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from pytorch_msssim import SSIM
 import torch
+import torchvision.transforms.functional as F_v
 
 from DECA.decalib.utils import util
 
@@ -33,6 +34,7 @@ def read_image_batch(image_dir, H=256, W=256):
     for i, image_file in enumerate(image_files):
         image = cv2.imread(os.path.join(image_dir, image_file))
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = cv2.resize(image, (H, W))
         image_data[i] = image.transpose(2, 0, 1)
 
     return torch.from_numpy(image_data).cuda()
@@ -87,28 +89,33 @@ m = face_attr_mask[3]
 
 # image = image.permute(1, 2, 0) / 255
 # m is a bounding box: l r t b
-# 
 
-mats_dir = os.path.join(X_dir.replace('images', 'align_transforms'))
-mat_paths = sorted(get_mats_paths(mats_dir))
+import cpbd
 
-X_mouths = X
-Y_mouths = Y
 
-X_mouths = X[..., m[2]:m[3], m[0]:m[1]]
-Y_mouths = Y[..., m[2]:m[3], m[0]:m[1]]
+cpbds = []
+for image in Y:
+    image = F_v.rgb_to_grayscale(image).squeeze().cpu().numpy()
+    cpbds.append(cpbd.compute(image))
 
-mapd = APD(X_mouths, Y_mouths)
-print(f"MAPD: {mapd}")
+
+print(f"CPBD:", np.mean(cpbds))
+
+
+# mats_dir = os.path.join(X_dir.replace('images', 'align_transforms'))
+# mat_paths = sorted(get_mats_paths(mats_dir))
+
+# X_mouths = X
+# Y_mouths = Y
+
+# X_mouths = X[..., m[2]:m[3], m[0]:m[1]]
+# Y_mouths = Y[..., m[2]:m[3], m[0]:m[1]]
+
+# mapd = APD(X_mouths, Y_mouths)
+# print(f"MAPD: {mapd}")
 
 
 # import matplotlib.pyplot as plt
 # plt.figure()
 # plt.imshow(Y_mouths[4].cpu().permute(1, 2, 0) / 255)
 # plt.savefig('mouth.png')
-# raise
-
-
-masks = 
-
-X_faces = [x*mask]

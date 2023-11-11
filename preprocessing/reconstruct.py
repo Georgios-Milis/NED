@@ -89,13 +89,14 @@ def main():
                 codedict = deca.encode(images)
                 
                 # Insert SPECTRE here
-                spectre_fit = img_pth.replace('/images', '/SPECTRE')
-                spectre_fit = re.sub("/\d{6}.png", ".pkl", spectre_fit)
-                spectre_dict = np.load(spectre_fit, allow_pickle=True)
-                frame_id = os.path.split(img_pth)[-1].replace('.png', '')
-                idx = int(frame_id) % 50
-                codedict["pose"] = spectre_dict["pose"][idx].unsqueeze(0).cuda()
-                codedict["exp"] = spectre_dict["exp"][idx].unsqueeze(0).cuda()
+                if os.path.exists(images_folder.replace('images', 'SPECTRE')):
+                    spectre_fit = img_pth.replace('/images', '/SPECTRE')
+                    spectre_fit = re.sub("/\d{6}.png", ".pkl", spectre_fit)
+                    spectre_dict = np.load(spectre_fit, allow_pickle=True)
+                    frame_id = os.path.split(img_pth)[-1].replace('.png', '')
+                    idx = int(frame_id) % 50
+                    codedict["pose"] = spectre_dict["pose"][idx].unsqueeze(0).cuda()
+                    codedict["exp"] = spectre_dict["exp"][idx].unsqueeze(0).cuda()
 
                 mkdir(os.path.dirname(img_pth.replace('/images', '/DECA')))
                 new_codedict = {}
@@ -121,6 +122,7 @@ def main():
             if args.save_shapes:
                 mkdir(os.path.dirname(img_pth.replace('/images', '/shapes')))
                 shape_pth = img_pth.replace('/images', '/shapes')
+                # shape_detail_images, shape_images
                 shape_image = warp(util.tensor2image(visdict['shape_images'][0])/255, dataset[i]['tform'], output_shape=(dataset[i]['original_size'][1], dataset[i]['original_size'][0]))
                 cv2.imwrite(shape_pth, (shape_image*255).astype(int))
 
