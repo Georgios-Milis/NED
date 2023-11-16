@@ -1,27 +1,21 @@
 #!/bin/bash
 set -e
 
-# Read the DECAs and create video parameters
-# test=$1
 
-test="1_63_pred"
-
-
-#subject="21M"
-subject=Obama
-model=from_TCD_all_exp4_03e6
+subject=21M
+driving_subject=21M
+# model=from_TCD_all_exp4_03e6
 
 # =============================================================================
 celeb=test_examples/$subject
-# 55F_3 is trained with SPECTRE
-checkpoints_dir=renderer_checkpoints/$subject
+checkpoints_dir=renderer_checkpoints/${subject}
+#checkpoints_dir=renderer_checkpoints/Tom
 
-
-for test in $(ls ../FastSpeech2/results_new/21M/$model/*_pred.mp4)
+# for wav_file in $(ls driving/$driving_subject/*_pred.mp4.wav)
+for wav_file in $(ls ../FastSpeech2/user_study/${driving_subject}_[1-9]*.wav)
 do
-    #test=18_si518_pred
-
-    test=$(basename $test .mp4)
+    # test=$(basename $wav_file .mp4.wav)
+	test=$(basename $wav_file .wav)
     echo $test
 
     if [ -d $celeb/$test/DECA ]; then 
@@ -36,25 +30,26 @@ do
     python renderer/create_inputs.py \
         --celeb $celeb \
         --exp_name $test \
-        --input /home/gmil/FastSpeech2/results_new/21M/$model/${test}_blend.pth \
+		--input ../FastSpeech2/user_study/${test}.pth \
         --save_shapes
     # Creates faces_aligned
     python renderer/test.py \
         --celeb $celeb \
         --exp_name $test \
         --checkpoints_dir $checkpoints_dir \
-        --which_epoch 20
+        #--which_epoch 20
     # Creates faces
     python postprocessing/unalign.py --celeb $celeb --exp_name $test
     # Writes full_frames
-    python postprocessing/blend.py --celeb $celeb --exp_name $test --save_images #--method copy_paste
+    python postprocessing/blend.py --celeb $celeb --exp_name $test --save_images
 
 
     # Create mp4 from frames
     python postprocessing/images2video.py \
         --imgs_path $celeb/$test/full_frames \
         --out_path $celeb/videos/$test.mp4 \
-        --wav /home/gmil/FastSpeech2/results_new/21M/$model/$test.mp4.wav
+        --wav $wav_file \
+        --fps 25
 
     # python postprocessing/images2video.py \
     #     --imgs_path test_examples/$subject/$test/shapes \

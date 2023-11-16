@@ -81,25 +81,25 @@ print(f"SSIM: {100 * ssim_val:.2f}%")
 
 
 
-face_attr_mask = util.load_local_mask(image_size=256, mode='bbx')
-m = face_attr_mask[3]
+# face_attr_mask = util.load_local_mask(image_size=256, mode='bbx')
+# m = face_attr_mask[3]
 
-# image = X[0]
-# import matplotlib.pyplot as plt
+# # image = X[0]
+# # import matplotlib.pyplot as plt
 
-# image = image.permute(1, 2, 0) / 255
-# m is a bounding box: l r t b
+# # image = image.permute(1, 2, 0) / 255
+# # m is a bounding box: l r t b
 
-import cpbd
-
-
-cpbds = []
-for image in Y:
-    image = F_v.rgb_to_grayscale(image).squeeze().cpu().numpy()
-    cpbds.append(cpbd.compute(image))
+# import cpbd
 
 
-print(f"CPBD:", np.mean(cpbds))
+# cpbds = []
+# for image in Y:
+#     image = F_v.rgb_to_grayscale(image).squeeze().cpu().numpy()
+#     cpbds.append(cpbd.compute(image))
+
+
+# print(f"CPBD:", np.mean(cpbds))
 
 
 # mats_dir = os.path.join(X_dir.replace('images', 'align_transforms'))
