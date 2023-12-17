@@ -154,6 +154,13 @@ def detect_and_save_faces(detector, mp4_path, split, start_i, args, test_name='i
             images = [image]
     # last sequence
     face_images, boxes, _ = get_faces(detector, images, previous_box, args)
+
+    # Extend by reversing and back ============================================
+    images = images + images[::-1] + images
+    face_images = face_images + face_images[::-1] + face_images
+    boxes = boxes + boxes[::-1] + boxes
+    # =========================================================================
+
     save_images(tensor2npimage(face_images), test_name, split, start_i, args)
 
     if args.save_full_frames:
